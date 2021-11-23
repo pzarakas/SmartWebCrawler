@@ -1,8 +1,8 @@
 //variable to store the web crawler's username
-var username = "";
+var username = "username";
 
 //variable to store the web crawler's password
-var password = "";
+var password = "password";
 
 //variable to store name of username field
 var usernameField = "";
@@ -11,7 +11,7 @@ var usernameField = "";
 var passwordField = "";
 
 //variable to store submit button name
-var submitButton = "";
+var submitButton = "commit";
 
 //StackOverflow code unchanged so far, have to get it to work with the above variables and the function below
 function getLoginFields() {
@@ -50,13 +50,22 @@ function getLoginFields() {
             }
         }
     }
-    return fieldPairs;
+    if(fieldPairs.length !== 0) {
+        usernameField = fieldPairs[0][0].id;
+        passwordField = fieldPairs[0][1].id;
+    }
 }
 
-function doLogin(tabId) {
+function doLogin() {
     document.getElementById(usernameField).value = username;
     document.getElementById(passwordField).value = password;
     setTimeout(function() {
-        document.getElementById(submitButton).click();
+        document.getElementsByName(submitButton)[0].click();
     }, 500);
+}
+
+getLoginFields();
+
+if(usernameField !== "" && passwordField !== "") {
+    doLogin();
 }
