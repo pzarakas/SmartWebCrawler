@@ -41,12 +41,29 @@ function getLoginFields() {
             parentForm = parentForm(curPswdField),
             curField = curPswdField;
         if (parentForm) {
+            pair = [curPswdField];
+            submit = false;
+            user = false;
             var inputs = parentForm.getElementsByTagName('input');
             for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i] !== curPswdField && inputs[i].type === 'text') {
-                    fieldPairs[fieldPairs.length] = [inputs[i], curPswdField];
-                    break;
+                if (inputs[i] !== curPswdField && inputs[i].type === 'text' && !user) {
+                    user = true;
+                    pair.unshift(inputs[i]);
+                    if (submit) {
+                        fieldPairs[fieldPairs.length] = pair;
+                        break;
+                    }
+
+                } else if (inputs[i] !== curPswdField && inputs[i].type === 'submit' && !submit) {
+                    submit = true;
+                    pair.push(inputs[i]);
+                    if (user) {
+                        fieldPairs[fieldPairs.length] = pair;
+                        break;
+                    }
+
                 }
+
             }
         }
     }
