@@ -16,7 +16,7 @@ var submitButton = "commit";
 //StackOverflow code unchanged so far, have to get it to work with the above variables and the function below
 function getLoginFields() {
     var fieldPairs = [],
-        pswd = (function(){
+        pswd = (function() {
             var inputs = document.getElementsByTagName('input'),
                 len = inputs.length,
                 ret = [];
@@ -30,7 +30,7 @@ function getLoginFields() {
         pswdLength = pswd.length,
         parentForm = function(elem) {
             while (elem.parentNode) {
-                if(elem.parentNode.nodeName.toLowerCase() === 'form') {
+                if (elem.parentNode.nodeName.toLowerCase() === 'form') {
                     return elem.parentNode;
                 }
                 elem = elem.parentNode;
@@ -50,22 +50,23 @@ function getLoginFields() {
             }
         }
     }
-    if(fieldPairs.length !== 0) {
-        usernameField = fieldPairs[0][0].id;
-        passwordField = fieldPairs[0][1].id;
+    if (fieldPairs.length !== 0) {
+        usernameField = fieldPairs[0][0];
+        passwordField = fieldPairs[0][1];
+        submitButton = fieldPairs[0][2];
     }
 }
 
 function doLogin() {
-    document.getElementById(usernameField).value = username;
-    document.getElementById(passwordField).value = password;
+    usernameField.value = username;
+    passwordField.value = password;
     setTimeout(function() {
-        document.getElementsByName(submitButton)[0].click();
+        submitButton.click();
     }, 500);
 }
 
 getLoginFields();
 
-if(usernameField !== "" && passwordField !== "") {
+if (usernameField !== "" && passwordField !== "") {
     doLogin();
 }
