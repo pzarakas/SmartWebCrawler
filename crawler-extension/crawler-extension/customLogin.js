@@ -4,6 +4,12 @@ var username = "username";
 //variable to store the web crawler's password
 var password = "password";
 
+//variable to store blacklist of prototypes
+var userblacklist = ["search"];
+
+//variable to store blacklist of submit types
+var submitblacklist = ["Search"]
+
 //variable to store name of username field
 var usernameField = "";
 
@@ -11,24 +17,84 @@ var usernameField = "";
 var passwordField = "";
 
 //variable to store submit button name
-var submitButton = "commit";
+var submitButton = "";
 
 //StackOverflow code unchanged so far, have to get it to work with the above variables and the function below
 function getLoginFields() {
-    var fieldPairs = [],
-        pswd = (function() {
-            var inputs = document.getElementsByTagName('input'),
-                len = inputs.length,
-                ret = [];
+    var inputs = document.getElementsByTagName('input');
+    var len = inputs.length;
+
+    while(len--) {
+        if(inputs[len].type == 'password') {
+            passwordField = inputs[len];
+        }
+    }
+
+    passwordField.value = "test";
+
+    inputs = document.getElementsByTagName('input');
+    len = inputs.length;
+
+    while(len--) {
+        if(inputs[len].type == 'text') {
+            if(!(userblacklist.includes(inputs[len].placeholder)) ) {
+                //alert(inputs[len].placeholder);
+                usernameField = inputs[len];
+            }
+        }
+    }
+
+    inputs = document.getElementsByTagName('input');
+    len = inputs.length;
+
+    while(len--) {
+        if(inputs[len].type == 'submit') {
+            //count++;
+            if(!submitblacklist.includes(inputs[len].value)) {
+                submitButton = inputs[len];
+            }
+        }
+    }
+
+    //alert(count);
+
+    if(submitButton == "") {
+        var buttons = document.getElementsByTagName('button');
+        len = buttons.length;
+
+        while(len--) {
+            if(buttons[len].type == 'submit') {
+                submitButton = buttons[len];
+            }
+        }
+    }
+
+    passwordField.value = "test";
+    usernameField.value = "beest";
+
+    //setTimeout(function() {
+    //    submitButton.click();
+    //}, 500);
+
+    /*
+    var fieldPairs = [];
+    var pswd = (function() {
+            var inputs = document.getElementsByTagName('input');
+            var len = inputs.length;
+            //alert(len);
+            var ret = [];
+
             while (len--) {
                 if (inputs[len].type === 'password') {
+                    //alert("found");
                     ret[ret.length] = inputs[len];
                 }
             }
             return ret;
-        })(),
-        pswdLength = pswd.length,
-        parentForm = function(elem) {
+        })();
+    var pswdLength = pswd.length;
+    //alert(pswdLength);
+    var parentForm = function(elem) {
             while (elem.parentNode) {
                 if (elem.parentNode.nodeName.toLowerCase() === 'form') {
                     return elem.parentNode;
@@ -36,11 +102,13 @@ function getLoginFields() {
                 elem = elem.parentNode;
             }
         };
+
     while (pswdLength--) {
         var curPswdField = pswd[pswdLength],
             parentForm = parentForm(curPswdField),
             curField = curPswdField;
         if (parentForm) {
+            //alert("testing");
             pair = [curPswdField];
             submit = false;
             user = false;
@@ -48,6 +116,7 @@ function getLoginFields() {
             for (var i = 0; i < inputs.length; i++) {
                 if (inputs[i] !== curPswdField && inputs[i].type === 'text' && !user) {
                     user = true;
+                    alert("here");
                     pair.unshift(inputs[i]);
                     if (submit) {
                         fieldPairs[fieldPairs.length] = pair;
@@ -72,11 +141,10 @@ function getLoginFields() {
         passwordField = fieldPairs[0][1];
         submitButton = fieldPairs[0][2];
     }
+    */
 }
 
 function doLogin() {
-    usernameField.value = username;
-    passwordField.value = password;
     setTimeout(function() {
         submitButton.click();
     }, 500);
@@ -84,6 +152,6 @@ function doLogin() {
 
 getLoginFields();
 
-if (usernameField !== "" && passwordField !== "") {
+if (usernameField !== "" && passwordField !== "" && submitButton !== "") {
     doLogin();
 }
