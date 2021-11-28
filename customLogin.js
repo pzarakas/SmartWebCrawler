@@ -43,9 +43,10 @@ let all = 0;
 
 if (window.localStorage.getItem('loginAttempt') != null) {
     if(isLoginStillPresent()) {
-        window.localStorage.removeItem('loginAttempt');
+        console.log('Bad login because form is still present');
         badLogin();
     } else {
+        console.log('Good login, no form present');
         successfulLogin()
     }
 }
@@ -147,16 +148,15 @@ getLoginFields();
 //alert(window.location.toString());
 
 if ((usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "") {
-    all = document.getElementsByTagName("*").length
+    all = document.getElementsByTagName("*").length;
     doLogin();
-    if(all !== document.getElementsByTagName("*").length) {
-        badLogin();
-    }
-    window.localStorage.setItem('loginAttempt','true');
     setTimeout(function() {
-        //if (last == window.location.toString()) {
-
-        //}
+        if(all !== document.getElementsByTagName("*").length) {
+            //console.log('Bad login, more elements');
+            badLogin();
+        } else {
+            window.localStorage.setItem('loginAttempt','true');
+        }
     }, 1000);
 }
 
@@ -171,9 +171,10 @@ function isLoginStillPresent() {
 
 function successfulLogin() {
     window.alert('Login successful??');
+    window.localStorage.removeItem('loginAttempt');
 }
 
 function badLogin() {
     window.alert("Login failed!!");
-
+    window.localStorage.removeItem('loginAttempt');
 }
