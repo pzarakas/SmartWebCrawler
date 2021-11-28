@@ -6,14 +6,15 @@
   "browser_action": {
     "default_title": "Crawler Extension"
   },
-  "permissions": [
-    "webRequest"
-  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "run_at": "document_end",
       "js": ["customLogin.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["backgroundScripts.js"],
+    "persistent": false
+  }
 }

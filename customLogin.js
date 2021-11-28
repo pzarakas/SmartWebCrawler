@@ -179,6 +179,3 @@ function badLogin() {
     window.localStorage.removeItem('loginAttempt');
 }
 
-chrome.webRequest.onHeadersReceived.addListener(function(headers) {
-    console.log(headers);
-});
