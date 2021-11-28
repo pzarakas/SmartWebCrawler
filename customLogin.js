@@ -25,7 +25,7 @@ var emailField = "";
 
 var last = "";
 
-var in_dom = document.body.contains(element);
+/*var in_dom = document.body.contains(element);
 var observer = new MutationObserver(function(mutations) {
     if (document.body.contains(element)) {
         if (!in_dom) {
@@ -38,7 +38,8 @@ var observer = new MutationObserver(function(mutations) {
     }
 
 });
-observer.observe(document.body, {childList: true});
+observer.observe(document.body, {childList: true});*/
+let all = 0;
 
 if (window.localStorage.getItem('loginAttempt') != null) {
     if(isLoginStillPresent()) {
@@ -145,7 +146,11 @@ getLoginFields();
 //alert(window.location.toString());
 
 if ((usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "") {
+    all = document.getElementsByTagName("*").length
     doLogin();
+    if(all !== document.getElementsByTagName("*").length) {
+        badLogin();
+    }
     window.localStorage.setItem('loginAttempt','true');
     setTimeout(function() {
         //if (last == window.location.toString()) {
