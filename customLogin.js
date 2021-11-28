@@ -128,3 +128,12 @@ if ((usernameField !== "" || emailField !== "") && passwordField !== "" && submi
         //}
     }, 1000);
 }
+
+function isLoginStillPresent() {
+    usernameField = "";
+    emailField = "";
+    passwordField = "";
+    submitButton = "";
+    getLoginFields();
+    return (usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "";
+}
