@@ -78,6 +78,7 @@ function getLoginFields() {
     if(submitButton == "") {
         while(len--) {
             if(inputs[len].type == 'email') {
+                //alert("here");
                 emailField = inputs[len];
             }
         }
@@ -106,7 +107,7 @@ function getLoginFields() {
 
         while(len--) {
             //alert(buttons[len].value);
-            if(buttons[len].type == 'submit' && (buttons[len].value == "" || buttons[len].value == "Login")) {
+            if(buttons[len].type == "submit" && (buttons[len].value == "" || buttons[len].value == "Login" || buttons[len].value == "log in")) {
                 //alert("found");
                 //alert(buttons[len].value);
                 count2++;
@@ -176,4 +177,3 @@ function badLogin() {
     window.alert("Login failed!!");
 
 }
-
