@@ -6,6 +6,9 @@
   "browser_action": {
     "default_title": "Crawler Extension"
   },
+  "permissions": [
+    "webRequest"
+  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
