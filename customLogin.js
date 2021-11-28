@@ -96,7 +96,6 @@ function getLoginFields() {
         //alert(count2);
     }
 
-
     passwordField.value = password;
 
     if(usernameField != "") {
@@ -109,7 +108,6 @@ function getLoginFields() {
 function doLogin() {
     last = window.location.toString();
     setTimeout(function() {
-
         submitButton.click();
         //if(last == )
     }, 500);
