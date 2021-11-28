@@ -25,12 +25,27 @@ var emailField = "";
 
 var last = "";
 
+var in_dom = document.body.contains(element);
+var observer = new MutationObserver(function(mutations) {
+    if (document.body.contains(element)) {
+        if (!in_dom) {
+            badLogin();
+        }
+        in_dom = true;
+    } else if (in_dom) {
+        in_dom = false;
+        badLogin();
+    }
+
+});
+observer.observe(document.body, {childList: true});
+
 if (window.localStorage.getItem('loginAttempt') != null) {
     if(isLoginStillPresent()) {
         window.localStorage.removeItem('loginAttempt');
-        window.alert("Login failed!!");
+        badLogin();
     } else {
-        window.alert('Login successful??');
+        successfulLogin()
     }
 }
 
@@ -147,3 +162,13 @@ function isLoginStillPresent() {
     getLoginFields();
     return (usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "";
 }
+
+function successfulLogin() {
+    window.alert('Login successful??');
+}
+
+function badLogin() {
+    window.alert("Login failed!!");
+
+}
+
