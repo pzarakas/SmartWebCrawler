@@ -25,6 +25,15 @@ var emailField = "";
 
 var last = "";
 
+if (window.localStorage.getItem('loginAttempt') != null) {
+    if(isLoginStillPresent()) {
+        window.localStorage.removeItem('loginAttempt');
+        window.alert("Login failed!!");
+    } else {
+        window.alert('Login successful??');
+    }
+}
+
 function getLoginFields() {
     var inputs = document.getElementsByTagName('input');
     var len = inputs.length;
@@ -122,6 +131,7 @@ getLoginFields();
 
 if ((usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "") {
     doLogin();
+    window.localStorage.setItem('loginAttempt','true');
     setTimeout(function() {
         //if (last == window.location.toString()) {
 
