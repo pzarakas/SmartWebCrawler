@@ -1,32 +1,32 @@
 //variable to store the web crawler's username
-var username = "username";
+let username = "username";
 
 //variable to store the web crawler's password
-var password = "password";
+let password = "UsGY4U6u?edAq=+aGzAWn7!Ts#2k7CAYzhX!n%8@";
 
 //variable to store the web crawler's email
-var email = "address@gmail.com"
+let email = "address@gmail.com"
 
 //variable to store blacklist of prototypes
-var userblacklist = ["search"];
+let userblacklist = ["search"];
 
 //variable to store blacklist of submit types
-var submitblacklist = ["Search"]
+let submitblacklist = ["Search"]
 
-var loginValues = ["Login", "log in"];
+let loginValues = ["Login", "log in"];
 
 //variable to store name of username field
-var usernameField = "";
+let usernameField = "";
 
 //variable to store name of password field
-var passwordField = "";
+let passwordField = "";
 
 //variable to store submit button name
-var submitButton = "";
+let submitButton = "";
 
-var emailField = "";
+let emailField = "";
 
-var last = "";
+let last = "";
 
 let all = 0;
 
@@ -36,16 +36,16 @@ if (window.localStorage.getItem('loginAttempt') != null) {
         badLogin();
     } else {
         console.log('Good login, no form present');
-        successfulLogin()
+        successfulLogin();
     }
 }
 
 function getLoginFields() {
-    var inputs = document.getElementsByTagName('input');
-    var len = inputs.length;
+    let inputs = document.getElementsByTagName('input');
+    let len = inputs.length;
 
     while(len--) {
-        if(inputs[len].type == 'password') {
+        if(inputs[len].type === 'password') {
             passwordField = inputs[len];
         }
     }
@@ -56,7 +56,7 @@ function getLoginFields() {
     len = inputs.length;
 
     while(len--) {
-        if(inputs[len].type == 'text') {
+        if(inputs[len].type === 'text') {
             if(!(userblacklist.includes(inputs[len].placeholder)) ) {
                 //alert(inputs[len].placeholder);
                 usernameField = inputs[len];
@@ -65,9 +65,9 @@ function getLoginFields() {
     }
 
     len = inputs.length;
-    if(submitButton == "") {
+    if(submitButton === "") {
         while(len--) {
-            if(inputs[len].type == 'email') {
+            if(inputs[len].type === 'email') {
                 //alert("here");
                 emailField = inputs[len];
             }
@@ -78,7 +78,7 @@ function getLoginFields() {
     len = inputs.length;
 
     while(len--) {
-        if(inputs[len].type == 'submit') {
+        if(inputs[len].type === 'submit') {
             //count++;
             if(!submitblacklist.includes(inputs[len].value)) {
                 submitButton = inputs[len];
@@ -86,13 +86,13 @@ function getLoginFields() {
         }
     }
 
-    if(submitButton == "") {
-        var buttons = document.getElementsByTagName('button');
+    if(submitButton === "") {
+        let buttons = document.getElementsByTagName('button');
         len = buttons.length;
-        //var count2 = 0;
+        //let count2 = 0;
 
         while(len--) {
-            if(buttons[len].type == "submit" && (buttons[len].value == "" || loginValues.includes(buttons[len].value))) {
+            if(buttons[len].type === "submit" && (buttons[len].value === "" || loginValues.includes(buttons[len].value))) {
                 //count2++;
                 submitButton = buttons[len];
 
@@ -105,9 +105,9 @@ function getLoginFields() {
 
     passwordField.value = password;
 
-    if(usernameField != "") {
+    if(usernameField !== "") {
         usernameField.value = username;
-    } else if (emailField != "") {
+    } else if (emailField !== "") {
         emailField.value = email;
     }
 }
@@ -117,23 +117,30 @@ function doLogin() {
     setTimeout(function() {
         submitButton.click();
     }, 500);
-
 }
 
 getLoginFields();
 
 if ((usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "") {
+    //Get total number of elements
     all = document.getElementsByTagName("*").length;
     doLogin();
+    //After the login is executed, wait a second
     setTimeout(function() {
+        //Check to see if the number of elements increased
+        //i.e the webpage displays a new message saying the login failed
+        //If the elemnts changed, bad login
         if(all !== document.getElementsByTagName("*").length) {
             badLogin();
         } else {
+            //Otherwise note a login attempt before page reload
             window.localStorage.setItem('loginAttempt','true');
         }
     }, 1000);
 }
 
+//Function to test whether login fields were still present after a reload of the page
+//For webpages that reload on a failed login
 function isLoginStillPresent() {
     usernameField = "";
     emailField = "";
@@ -153,6 +160,6 @@ function successfulLogin() {
 //Placeholder method for handling failed login (password doesn't work with site)
 function badLogin() {
     //Alert is for demonstration purposes, other methods of login can be implemented as necessary
-    window.alert("Login failed!!");
+    window.alert("Login failed!!, site must be registered for");
     window.localStorage.removeItem('loginAttempt');
 }
