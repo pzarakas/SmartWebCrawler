@@ -4,6 +4,7 @@ var username = "username";
 //variable to store the web crawler's password
 var password = "password";
 
+//variable to store the web crawler's email
 var email = "address@gmail.com"
 
 //variable to store blacklist of prototypes
@@ -11,6 +12,8 @@ var userblacklist = ["search"];
 
 //variable to store blacklist of submit types
 var submitblacklist = ["Search"]
+
+var loginValues = ["Login", "log in"];
 
 //variable to store name of username field
 var usernameField = "";
@@ -25,20 +28,6 @@ var emailField = "";
 
 var last = "";
 
-/*var in_dom = document.body.contains(element);
-var observer = new MutationObserver(function(mutations) {
-    if (document.body.contains(element)) {
-        if (!in_dom) {
-            badLogin();
-        }
-        in_dom = true;
-    } else if (in_dom) {
-        in_dom = false;
-        badLogin();
-    }
-
-});
-observer.observe(document.body, {childList: true});*/
 let all = 0;
 
 if (window.localStorage.getItem('loginAttempt') != null) {
@@ -97,30 +86,21 @@ function getLoginFields() {
         }
     }
 
-    //alert(count);
-
     if(submitButton == "") {
         var buttons = document.getElementsByTagName('button');
         len = buttons.length;
-        var count2 = 0;
-
-        //alert(len);
+        //var count2 = 0;
 
         while(len--) {
-            //alert(buttons[len].value);
-            if(buttons[len].type == "submit" && (buttons[len].value == "" || buttons[len].value == "Login" || buttons[len].value == "log in")) {
-                //alert("found");
-                //alert(buttons[len].value);
-                count2++;
+            if(buttons[len].type == "submit" && (buttons[len].value == "" || loginValues.includes(buttons[len].value))) {
+                //count2++;
                 submitButton = buttons[len];
 
-                if(buttons[len].value == "Login") {
+                if(loginValues.includes(buttons[len].value)) {
                     break;
                 }
             }
         }
-
-        //alert(count2);
     }
 
     passwordField.value = password;
@@ -136,23 +116,17 @@ function doLogin() {
     last = window.location.toString();
     setTimeout(function() {
         submitButton.click();
-        //if(last == )
     }, 500);
 
 }
 
-//alert(document.documentElement.innerHTML.toString().includes("Incorrect"));
-
 getLoginFields();
-
-//alert(window.location.toString());
 
 if ((usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "") {
     all = document.getElementsByTagName("*").length;
     doLogin();
     setTimeout(function() {
         if(all !== document.getElementsByTagName("*").length) {
-            //console.log('Bad login, more elements');
             badLogin();
         } else {
             window.localStorage.setItem('loginAttempt','true');
@@ -169,13 +143,16 @@ function isLoginStillPresent() {
     return (usernameField !== "" || emailField !== "") && passwordField !== "" && submitButton !== "";
 }
 
+//Placeholder method for handling successful login (password works with site)
 function successfulLogin() {
+    //Alert is for demonstration purposes, other methods of login can be implemented as necessary
     window.alert('Login successful??');
     window.localStorage.removeItem('loginAttempt');
 }
 
+//Placeholder method for handling failed login (password doesn't work with site)
 function badLogin() {
+    //Alert is for demonstration purposes, other methods of login can be implemented as necessary
     window.alert("Login failed!!");
     window.localStorage.removeItem('loginAttempt');
 }
-
