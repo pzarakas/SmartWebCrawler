@@ -58,7 +58,6 @@ function getLoginFields() {
     while(len--) {
         if(inputs[len].type === 'text') {
             if(!(userblacklist.includes(inputs[len].placeholder)) ) {
-                //alert(inputs[len].placeholder);
                 usernameField = inputs[len];
             }
         }
@@ -89,13 +88,10 @@ function getLoginFields() {
     if(submitButton === "") {
         let buttons = document.getElementsByTagName('button');
         len = buttons.length;
-        //let count2 = 0;
 
         while(len--) {
             if(buttons[len].type === "submit" && (buttons[len].value === "" || loginValues.includes(buttons[len].value))) {
-                //count2++;
                 submitButton = buttons[len];
-
                 if(loginValues.includes(buttons[len].value)) {
                     break;
                 }
@@ -129,7 +125,7 @@ if ((usernameField !== "" || emailField !== "") && passwordField !== "" && submi
     setTimeout(function() {
         //Check to see if the number of elements increased
         //i.e the webpage displays a new message saying the login failed
-        //If the elemnts changed, bad login
+        //If the elements changed, bad login
         if(all !== document.getElementsByTagName("*").length) {
             badLogin();
         } else {
