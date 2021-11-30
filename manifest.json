@@ -10,11 +10,10 @@
     {
       "matches": ["<all_urls>"],
       "run_at": "document_end",
-      "js": ["customLogin.js"]
+      "js": ["content.js"]
     }
   ],
   "background": {
-    "scripts": ["backgroundScripts.js"],
-    "persistent": false
+    "scripts": ["queue.js", "background.js"]
   }
 }
